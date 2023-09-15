@@ -15,6 +15,8 @@ while True: # for resetting the program
         x.append(str(int(remainder * 16))) # we multiply the remainder by 16 so we can have our list items to convert it to hexadecimal
         prompt = int(result) # we take the integar part and repeat the process until the remainder = zero
 
+    x = list(reversed(x))
+    
     # hexadata.txt contains the following data that will be used in converting process:
     # 15=F
     # 14=E
