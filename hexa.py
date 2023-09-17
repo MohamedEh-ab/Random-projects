@@ -1,4 +1,9 @@
 # the program does the mathematical operation for the user to convert decimal-format integers to hexadecimal format
+# the program calculates remainders and append them in a list where theses remainders are then reversed by a function in order to output the hexadecimal format in right order
+# the program then uses a dictionary loaded from a txt file where it tries to match the key items and replaces the values according to the dictionary
+# then program appends the items after they have been replaced in another new list and then convert the list into tuple to join the items into one string
+# the program outputs the desired output after a small wait thing that emulates calculation time without boring the user
+
 import os, time
 
 def convertTuple(tup): # a function used later to take the items of the resultant tuple and join them together to form a readable string for the user
@@ -11,8 +16,9 @@ while True: # for resetting the program
 
     while prompt: 
         result = prompt / 16 # the input decimal is divided by 16
-        remainder = (result) % 1.0 # then we take the fractional part of the result and store it as a "remainder"
-        x.append(str(int(remainder * 16))) # we multiply the remainder by 16 so we can have our list items to convert it to hexadecimal
+        # remainder = (result) % 1.0 
+        remainder = prompt % 16 # then we take the fractional part of the result and store it as a "remainder"
+        x.append(str(int(remainder))) # we multiply the remainder by 16 so we can have our list items to convert it to hexadecimal
         prompt = int(result) # we take the integar part and repeat the process until the remainder = zero
 
     x = list(reversed(x))
@@ -36,8 +42,12 @@ while True: # for resetting the program
     # 0=0
 
     hexadata = {}
-    # os.chdir(r'C:\Users\Mohamed\OneDrive\Desktop\New folder') <--- the absolute path to my folder where the txt file
-    with open("hexadata.txt") as f:
+    # using relative dir of txt file
+    script_dir = os.path.dirname(__file__)
+    rel_path = "hexadata.txt"
+    abs_file_path = os.path.join(script_dir, rel_path)
+
+    with open(abs_file_path) as f:
         for line in f:
             key, value = line.split('=')
             hexadata[key.strip()] = value.strip()
