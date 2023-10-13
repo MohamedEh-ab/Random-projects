@@ -4,25 +4,35 @@
 # then program appends the items after they have been replaced in another new list and then convert the list into tuple to join the items into one string
 # the program outputs the desired output after a small wait thing that emulates calculation time without boring the user
 
-import os, time
+import os, sys, subprocess, time
 
-def convertTuple(tup): # a function used later to take the items of the resultant tuple and join them together to form a readable string for the user
+def convertTuple(tup):  # a function used later to take the items of the resultant tuple and join them together to form a readable string for the user
     str = ''.join(tup)
     return str
 
-while True: # for resetting the program
-    prompt = int(input("Enter input in decimal format: "))
-    x = [] # our empty list for the remainder which will be converted into hexadecimal 
 
-    while prompt: 
-        result = prompt / 16 # the input decimal is divided by 16
-        # remainder = (result) % 1.0 
-        remainder = prompt % 16 # then we take the fractional part of the result and store it as a "remainder"
-        x.append(str(int(remainder))) # we multiply the remainder by 16 so we can have our list items to convert it to hexadecimal
-        prompt = int(result) # we take the integar part and repeat the process until the remainder = zero
+while True:  # for resetting the program
+    try:
+        prompt = int(input("Enter input in decimal format: "))
+    except:
+        print("insert only numbers, please.")
+        time.sleep(3)
+        os.system('clear')
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+    x = []  # our empty list for the remainder which will be converted into hexadecimal
+
+    while prompt:
+        result = prompt / 16  # the input decimal is divided by 16
+        # remainder = (result) % 1.0
+        # then we take the fractional part of the result and store it as a "remainder"
+        remainder = prompt % 16
+        # we multiply the remainder by 16 so we can have our list items to convert it to hexadecimal
+        x.append(str(int(remainder)))
+        # we take the integar part and repeat the process until the remainder = zero
+        prompt = int(result)
 
     x = list(reversed(x))
-    
+
     # hexadata.txt contains the following data that will be used in converting process:
     # 15=F
     # 14=E
@@ -52,16 +62,17 @@ while True: # for resetting the program
             key, value = line.split('=')
             hexadata[key.strip()] = value.strip()
 
-    y = [] # our list for the hexadecimal items after converting process is completed
+    y = []  # our list for the hexadecimal items after converting process is completed
 
-    for i in x: # a for loop that replaces each item in our original remainder list according to the data from our txt file to convert it into hexadecimal format
+    for i in x:  # a for loop that replaces each item in our original remainder list according to the data from our txt file to convert it into hexadecimal format
         char = hexadata[i]
         y.append(str(char))
 
-    y = tuple(y) # we convert our list to tuple so we can join its items together in a single string
+    # we convert our list to tuple so we can join its items together in a single string
+    y = tuple(y)
 
-    z = convertTuple(y) # this function is defined earlier for joining purpose and z here contains our hexadecimal format at last
-
+    # this function is defined earlier for joining purpose and z here contains our hexadecimal format at last
+    z = convertTuple(y)
 
    # this just a cool waiting thing to stimulate calculating process in professional calculators
     print("")
@@ -72,6 +83,13 @@ while True: # for resetting the program
 
     print("")
     print("")
-    print("Your input in hexadecimal format: " + z) # here is our output. don't mind the annoying print sentences, I grew bored and tired from constant bug fixing till this point ;( 
-    print("----------------------------------------------")
-    print("")
+    # here is our output. don't mind the annoying print sentences, I grew bored and tired from constant bug fixing till this point ;(
+    print("Your input in hexadecimal format: " + z)
+    cont = input("\nProceed? ")
+    if cont == "no":
+        sys.exit()
+        break
+    else:
+        os.system('clear')
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+    break
